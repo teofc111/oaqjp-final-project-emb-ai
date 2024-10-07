@@ -1,3 +1,8 @@
+'''
+Server for Flask app for emotion detector.
+Deployed on localhost:5000
+'''
+
 # Imports
 from flask import Flask, render_template, request
 from EmotionDetection.emotion_detection import emotion_detector
@@ -7,7 +12,10 @@ app = Flask("Emotion Detector")
 
 @app.route("/emotionDetector")
 def emo_detector():
-    # Performs emotion detection over Flask channel
+    '''
+    Performs emotion detection over Flask channel
+    Uses emotion_detector function.
+    '''
 
     # Retrieve the text to analyze
     text_to_analyze = request.args.get('textToAnalyze')
@@ -17,12 +25,11 @@ def emo_detector():
 
     if result['anger'] is None:
         return "Invalid text! Please try again!"
-    else:
-        dominant_emotion = result['dominant_emotion']
-        del result['dominant_emotion']
+    dominant_emotion = result['dominant_emotion']
+    del result['dominant_emotion']
 
-        return f"For the given statement, the system response is {result}.\
-        The dominant emotion is {dominant_emotion}."
+    return f"For the given statement, the system response is {result}.\
+    The dominant emotion is {dominant_emotion}."
 
 @app.route("/")
 def render_index_page():
